@@ -1,0 +1,16 @@
+package io.github.kdroidfilter.database.core.policies
+
+import io.github.kdroidfilter.database.core.AppCategory
+import io.github.kdroidfilter.database.core.NetworkPolicy
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+// Simple case: same rule in all modes
+@Serializable
+@SerialName("Fixed")
+data class FixedPolicy(
+    override val packageName: String,
+    override val category: AppCategory,
+    val networkPolicy: NetworkPolicy,
+    override val minimumVersionCode: Int,
+) : AppPolicy

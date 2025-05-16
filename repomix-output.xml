@@ -1,0 +1,1749 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+4. Repository files, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+<additional_info>
+
+</additional_info>
+
+</file_summary>
+
+<directory_structure>
+app-policies/
+  communication/
+    com.whatsapp.json
+    org.signal.json
+  navigation/
+    com.here.app.json
+    com.pango.android.json
+    com.tranzmate.json
+    com.waze.json
+  video/
+    com.kosher.video.json
+    com.youtube.tv.json
+core/
+  src/
+    commonMain/
+      kotlin/
+        io/
+          github/
+            kdroidfilter/
+              database/
+                core/
+                  policies/
+                    AppPolicy.kt
+                    FixedPolicy.kt
+                    ModeBasedPolicy.kt
+                    PolicyVariant.kt
+                  AppCategory.kt
+                  NetworkMode.kt
+                  UserMode.kt
+                  Utils.kt
+  build.gradle.kts
+generator/
+  src/
+    commonMain/
+      kotlin/
+        io/
+          github/
+            kdroidfilter/
+              database/
+                generator/
+                  PolicyRepository.kt
+  all-policies.json
+  build.gradle.kts
+gradle/
+  wrapper/
+    gradle-wrapper.properties
+  libs.versions.toml
+sample/
+  composeApp/
+    src/
+      androidMain/
+        kotlin/
+          sample/
+            app/
+              main.kt
+        AndroidManifest.xml
+      commonMain/
+        kotlin/
+          sample/
+            app/
+              App.kt
+      iosMain/
+        kotlin/
+          sample/
+            app/
+              main.kt
+      jvmMain/
+        kotlin/
+          sample/
+            app/
+              main.kt
+      wasmJsMain/
+        kotlin/
+          sample/
+            app/
+              main.kt
+        resources/
+          index.html
+    build.gradle.kts
+.gitignore
+build.gradle.kts
+gradle.properties
+gradlew
+gradlew.bat
+README.MD
+settings.gradle.kts
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="app-policies/communication/com.whatsapp.json">
+{
+    "type": "ModeBased",
+    "packageName": "com.whatsapp",
+    "category": "COMMUNICATION",
+    "modePolicies": {
+        "OFFLINE": {
+            "mode": "LOCAL_ONLY"
+        },
+        "GPS_ONLY": {
+            "mode": "WHITELIST",
+            "spec": {
+                "type": "HostList",
+                "hosts": [
+                    "whatsapp.com"
+                ]
+            }
+        }
+    },
+    "minimumVersionCode": 100
+}
+</file>
+
+<file path="app-policies/communication/org.signal.json">
+{
+    "type": "Fixed",
+    "packageName": "org.signal",
+    "category": "COMMUNICATION",
+    "networkPolicy": {
+        "mode": "WHITELIST",
+        "spec": {
+            "type": "HostList",
+            "hosts": [
+                "signal.org"
+            ]
+        }
+    },
+    "minimumVersionCode": 0
+}
+</file>
+
+<file path="app-policies/navigation/com.here.app.json">
+{
+  "type": "ModeBased",
+  "packageName": "com.here.app",
+  "category": "NAVIGATION",
+  "modePolicies": {
+    "OFFLINE":       { "mode": "LOCAL_ONLY" },
+    "GPS_ONLY":      { "mode": "FULL_OPEN" },
+    "GPS_AND_MAIL":  { "mode": "FULL_OPEN" },
+    "REDUCED_RISK":  {
+      "mode": "WHITELIST",
+      "spec": { "type": "HostList", "hosts": ["here.com"] }
+    },
+    "MOST_OPEN":     { "mode": "FULL_OPEN" }
+  },
+  "minimumVersionCode": 0
+}
+</file>
+
+<file path="app-policies/navigation/com.pango.android.json">
+{
+  "type": "Fixed",
+  "packageName": "com.pango.android",
+  "category": "NAVIGATION",
+  "networkPolicy": {
+    "mode": "BLACKLIST",
+    "spec": {
+      "type": "HostList",
+      "hosts": [
+        "*.pango.co.il"
+      ]
+    }
+  },
+  "minimumVersionCode": 110603
+}
+</file>
+
+<file path="app-policies/navigation/com.tranzmate.json">
+{
+  "type": "Fixed",
+  "packageName": "com.tranzmate",
+  "category": "NAVIGATION",
+  "networkPolicy": {
+    "mode": "BLACKLIST",
+    "spec": {
+      "type": "HostList",
+      "hosts": [
+        "*.moovit.com",
+        "*.support.moovitapp.com"
+      ]
+    }
+  },
+  "minimumVersionCode": 593
+}
+</file>
+
+<file path="app-policies/navigation/com.waze.json">
+{
+  "type": "Fixed",
+  "packageName": "com.waze",
+  "category": "NAVIGATION",
+  "networkPolicy": {
+    "mode": "BLACKLIST",
+    "spec": {
+      "type": "HostList",
+      "hosts": [
+        "www.waze.com",
+        "venue-image.waze.com",
+        "ads-resources.waze.com",
+        "ads-resources-legacy.waze.com",
+        "adsassets.waze.com",
+        "social.waze.co.il"
+      ]
+    }
+  },
+  "minimumVersionCode": 1030416
+}
+</file>
+
+<file path="app-policies/video/com.kosher.video.json">
+{
+  "type": "MultiMode",
+  "packageName": "com.kosher.video",
+  "category": "VIDEO",
+  "minimumVersionCode": 7,
+  "modeVariants": [
+    {
+      "userMode": "REDUCED_RISK",
+      "variants": [
+        {
+          "id": "strict",
+          "label": "Strict – Torah content only",
+          "policy": {
+            "mode": "WHITELIST",
+            "spec": { "type": "HostList", "hosts": ["yutorah.org", "shiurim.org"] }
+          }
+        },
+        {
+          "id": "balanced",
+          "label": "Balanced – curated kosher list",
+          "policy": {
+            "mode": "WHITELIST",
+            "spec": { "type": "HostList", "hosts": ["yutorah.org", "shiurim.org", "torahanytime.com"] }
+          }
+        }
+      ],
+      "defaultVariantId": "balanced"
+    },
+    {
+      "userMode": "MOST_OPEN",
+      "variants": [
+        {
+          "id": "open",
+          "label": "Fully open",
+          "policy": { "mode": "FULL_OPEN" }
+        }
+      ]
+    }
+  ]
+}
+</file>
+
+<file path="app-policies/video/com.youtube.tv.json">
+{
+    "type": "MultiMode",
+    "packageName": "com.youtube.tv",
+    "category": "VIDEO",
+    "modeVariants": [
+        {
+            "userMode": "GPS_ONLY",
+            "variants": [
+                {
+                    "id": "strict",
+                    "label": "Strict (local only)",
+                    "policy": {
+                        "mode": "LOCAL_ONLY"
+                    }
+                },
+                {
+                    "id": "balanced",
+                    "label": "Balanced (whitelist)",
+                    "policy": {
+                        "mode": "WHITELIST",
+                        "spec": {
+                            "type": "HostList",
+                            "hosts": [
+                                "googlevideo.com"
+                            ]
+                        }
+                    }
+                }
+            ],
+            "defaultVariantId": "balanced"
+        },
+        {
+            "userMode": "MOST_OPEN",
+            "variants": [
+                {
+                    "id": "open",
+                    "label": "Fully open",
+                    "policy": {
+                        "mode": "FULL_OPEN"
+                    }
+                }
+            ]
+        }
+    ],
+    "minimumVersionCode": 123
+}
+</file>
+
+<file path="core/src/commonMain/kotlin/io/github/kdroidfilter/database/core/policies/AppPolicy.kt">
+package io.github.kdroidfilter.database.core.policies
+
+import io.github.kdroidfilter.database.core.AppCategory
+import kotlinx.serialization.Serializable
+
+@Serializable
+sealed interface AppPolicy {
+    val packageName: String
+    val category: AppCategory
+    val minimumVersionCode: Int
+}
+</file>
+
+<file path="core/src/commonMain/kotlin/io/github/kdroidfilter/database/core/policies/FixedPolicy.kt">
+package io.github.kdroidfilter.database.core.policies
+
+import io.github.kdroidfilter.database.core.AppCategory
+import io.github.kdroidfilter.database.core.NetworkPolicy
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+// Simple case: same rule in all modes
+@Serializable
+@SerialName("Fixed")
+data class FixedPolicy(
+    override val packageName: String,
+    override val category: AppCategory,
+    val networkPolicy: NetworkPolicy,
+    override val minimumVersionCode: Int,
+) : AppPolicy
+</file>
+
+<file path="core/src/commonMain/kotlin/io/github/kdroidfilter/database/core/policies/ModeBasedPolicy.kt">
+package io.github.kdroidfilter.database.core.policies
+
+import io.github.kdroidfilter.database.core.AppCategory
+import io.github.kdroidfilter.database.core.NetworkPolicy
+import io.github.kdroidfilter.database.core.UserMode
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+// Advanced case: different rules depending on the user mode
+@Serializable
+@SerialName("ModeBased")
+data class ModeBasedPolicy(
+    override val packageName: String,
+    override val category: AppCategory,
+    val modePolicies: Map<UserMode, NetworkPolicy>,
+    override val minimumVersionCode: Int,
+) : AppPolicy
+</file>
+
+<file path="core/src/commonMain/kotlin/io/github/kdroidfilter/database/core/policies/PolicyVariant.kt">
+package io.github.kdroidfilter.database.core.policies
+
+import io.github.kdroidfilter.database.core.AppCategory
+import io.github.kdroidfilter.database.core.NetworkPolicy
+import io.github.kdroidfilter.database.core.UserMode
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+/** Free identifier for the variant; used as a display key in the UI. */
+@Serializable
+data class PolicyVariant(
+    val id: String,            // e.g. "strict", "balanced", "relaxed"
+    val label: String,         // e.g. "Strict (no external hosts)"
+    val policy: NetworkPolicy  // associated filtering rule
+)
+
+/** Group of variants available for a given UserMode. */
+@Serializable
+data class ModeVariants(
+    val userMode: UserMode,
+    val variants: List<PolicyVariant>,
+    val defaultVariantId: String = variants.first().id
+)
+
+/** Complete policy: several user modes, each with multiple variants. */
+@Serializable @SerialName("MultiMode")
+data class MultiModePolicy(
+    override val packageName: String,
+    override val category: AppCategory,
+    val modeVariants: List<ModeVariants>,
+    override val minimumVersionCode: Int,
+) : AppPolicy {
+
+    /** Returns the effective NetworkPolicy for the specified mode and variant. */
+    fun resolve(mode: UserMode, chosenId: String? = null): NetworkPolicy {
+        val mv = modeVariants.first { it.userMode == mode }
+        val id = chosenId ?: mv.defaultVariantId
+        return mv.variants.first { it.id == id }.policy
+    }
+}
+</file>
+
+<file path="core/src/commonMain/kotlin/io/github/kdroidfilter/database/core/AppCategory.kt">
+package io.github.kdroidfilter.database.core
+
+import kotlinx.serialization.Serializable
+
+@Serializable
+enum class AppCategory {
+    TORAH,
+    COMMUNICATION,
+    PRODUCTIVITY,
+    TOOLS,
+    NAVIGATION,
+    SHOPPING,
+    FINANCE,
+    NEWS,
+    EDUCATION,
+    HEALTH_FITNESS,
+    MUSIC_AUDIO,
+    VIDEO,
+    PHOTOGRAPHY,
+    ENTERTAINMENT,
+    HOME,
+    LIFESTYLE,
+    TRAVEL,
+    BUSINESS,
+    CUSTOMIZATION,
+    MAIL,
+    SYSTEM
+}
+</file>
+
+<file path="core/src/commonMain/kotlin/io/github/kdroidfilter/database/core/NetworkMode.kt">
+package io.github.kdroidfilter.database.core
+
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+@Serializable
+enum class NetworkMode {
+    FULL_OPEN,      // No restrictions
+    BLACKLIST,      // Block specific hosts
+    WHITELIST,      // Allow only specific hosts
+    LOCAL_ONLY      // Allow only local network access
+}
+
+// 2. Optional details depending on mode
+@Serializable
+sealed interface ModeSpec {
+    @Serializable @SerialName("None")
+    object None : ModeSpec                        // For FULL_OPEN and LOCAL_ONLY
+    @Serializable @SerialName("HostList")
+    data class HostList(val hosts: Set<String>) : ModeSpec  // For BLACKLIST and WHITELIST
+}
+
+@Serializable
+data class NetworkPolicy(
+    val mode: NetworkMode,
+    val spec: ModeSpec = ModeSpec.None
+)
+</file>
+
+<file path="core/src/commonMain/kotlin/io/github/kdroidfilter/database/core/UserMode.kt">
+package io.github.kdroidfilter.database.core
+
+import kotlinx.serialization.Serializable
+
+@Serializable
+enum class UserMode(val level: Int) {
+    OFFLINE (level = 0),
+    LOCAL_ONLY(level = 1),
+    GPS_ONLY(level = 2),
+    GPS_AND_MAIL(level = 3),
+    REDUCED_RISK(level = 4),
+    MOST_OPEN(level = 5)
+}
+</file>
+
+<file path="core/src/commonMain/kotlin/io/github/kdroidfilter/database/core/Utils.kt">
+package io.github.kdroidfilter.database.core
+
+import io.github.kdroidfilter.database.core.policies.AppPolicy
+import io.github.kdroidfilter.database.core.policies.FixedPolicy
+import io.github.kdroidfilter.database.core.policies.ModeBasedPolicy
+import io.github.kdroidfilter.database.core.policies.MultiModePolicy
+
+fun resolvePolicy(policy: AppPolicy, userMode: UserMode, variantId: String? = null): NetworkPolicy {
+    return when (policy) {
+        is FixedPolicy -> policy.networkPolicy
+        is ModeBasedPolicy -> policy.modePolicies[userMode]
+            ?: NetworkPolicy(NetworkMode.LOCAL_ONLY) // fallback if mode missing
+        is MultiModePolicy -> policy.resolve(userMode, variantId)
+    }
+}
+</file>
+
+<file path="core/build.gradle.kts">
+@file:OptIn(ExperimentalWasmDsl::class)
+
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+
+plugins {
+    alias(libs.plugins.multiplatform)
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlinx.serialization)
+}
+
+group = "io.github.kdroidfilter.database.core"
+version = "1.0.0"
+
+kotlin {
+    jvmToolchain(17)
+
+    androidTarget { publishLibraryVariants("release") }
+    jvm()
+    wasmJs { browser() }
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
+    mingwX64()
+    linuxX64()
+    macosX64()
+    macosArm64()
+
+    sourceSets {
+        commonMain.dependencies {
+            implementation(libs.kotlinx.coroutines.core)
+            implementation(libs.kotlinx.coroutines.test)
+            implementation(libs.kotlinx.serialization.json)
+            implementation(libs.kermit)
+        }
+
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+        }
+
+        androidMain.dependencies {
+            implementation(libs.kotlinx.coroutines.android)
+        }
+
+        jvmMain.dependencies {
+            implementation(libs.kotlinx.coroutines.swing)
+        }
+
+        iosMain.dependencies {
+        }
+
+    }
+
+    //https://kotlinlang.org/docs/native-objc-interop.html#export-of-kdoc-comments-to-generated-objective-c-headers
+    targets.withType<org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget> {
+        compilations["main"].compileTaskProvider.configure {
+            compilerOptions {
+                freeCompilerArgs.add("-Xexport-kdoc")
+            }
+        }
+    }
+
+}
+
+android {
+    namespace = "io.github.kdroidfilter.database.core"
+    compileSdk = 35
+
+    defaultConfig {
+        minSdk = 21
+    }
+}
+</file>
+
+<file path="generator/src/commonMain/kotlin/io/github/kdroidfilter/database/generator/PolicyRepository.kt">
+package io.github.kdroidfilter.database.generator
+
+import io.github.kdroidfilter.database.core.ModeSpec
+import io.github.kdroidfilter.database.core.policies.AppPolicy
+import io.github.kdroidfilter.database.core.policies.FixedPolicy
+import io.github.kdroidfilter.database.core.policies.ModeBasedPolicy
+import io.github.kdroidfilter.database.core.policies.MultiModePolicy
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.modules.SerializersModule
+import kotlinx.serialization.modules.polymorphic
+import kotlinx.serialization.modules.subclass
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.Paths
+import java.nio.file.StandardOpenOption
+import kotlin.io.path.extension
+import kotlin.io.path.isRegularFile
+
+object PolicyRepository {
+    /**
+     * JSON configuration: polymorphism, ignore unknown keys, pretty print
+     */
+    private val json = Json {
+        classDiscriminator = "type"
+        ignoreUnknownKeys = true
+        encodeDefaults = false
+        prettyPrint = true
+        serializersModule = SerializersModule {
+            polymorphic(AppPolicy::class) {
+                subclass(FixedPolicy::class, FixedPolicy.serializer())
+                subclass(ModeBasedPolicy::class, ModeBasedPolicy.serializer())
+                subclass(MultiModePolicy::class, MultiModePolicy.serializer())
+            }
+            polymorphic(ModeSpec::class) {
+                subclass(ModeSpec.None::class, ModeSpec.None.serializer())
+                subclass(ModeSpec.HostList::class, ModeSpec.HostList.serializer())
+            }
+        }
+    }
+
+    /**
+     * Load recursively all *.json files under the given root
+     */
+    fun loadAll(root: Path): List<AppPolicy> =
+        Files.walk(root)
+            .filter { it.isRegularFile() && it.extension == "json" }
+            .map { path ->
+                Files.newBufferedReader(path).use { reader ->
+                    json.decodeFromString(AppPolicy.serializer(), reader.readText())
+                }
+            }
+            .toList()
+
+    /**
+     * Save (replace) a single policy to its corresponding file under root
+     */
+    fun save(policy: AppPolicy, root: Path) {
+        val relPath = policy.category.name.lowercase()
+        val file = root.resolve(relPath).resolve("${policy.packageName}.json")
+        Files.createDirectories(file.parent)
+        Files.newBufferedWriter(
+            file,
+            Charsets.UTF_8,
+            StandardOpenOption.CREATE,
+            StandardOpenOption.TRUNCATE_EXISTING
+        ).use { writer ->
+            writer.write(json.encodeToString(AppPolicy.serializer(), policy))
+        }
+    }
+
+    /**
+     * Exports all loaded policies as a single JSON array to the specified output file
+     */
+    fun exportAll(root: Path, outputFile: Path) {
+        val policies = loadAll(root)
+        val jsonArray = json.encodeToString(ListSerializer(AppPolicy.serializer()), policies)
+        // Ensure output directory exists if provided
+        outputFile.parent?.let { Files.createDirectories(it) }
+        Files.newBufferedWriter(
+            outputFile,
+            Charsets.UTF_8,
+            StandardOpenOption.CREATE,
+            StandardOpenOption.TRUNCATE_EXISTING
+        ).use { writer ->
+            writer.write(jsonArray)
+        }
+    }
+}
+
+fun main() {
+    val projectDir = Paths.get("").toAbsolutePath()      // ex. /…/my-generator
+    val root       = projectDir.parent.resolve("app-policies")
+    val output = Paths.get("all-policies.json")
+    PolicyRepository.exportAll(root, output)
+
+}
+</file>
+
+<file path="generator/all-policies.json">
+[
+    {
+        "type": "ModeBased",
+        "packageName": "com.here.app",
+        "category": "NAVIGATION",
+        "modePolicies": {
+            "OFFLINE": {
+                "mode": "LOCAL_ONLY"
+            },
+            "GPS_ONLY": {
+                "mode": "FULL_OPEN"
+            },
+            "GPS_AND_MAIL": {
+                "mode": "FULL_OPEN"
+            },
+            "REDUCED_RISK": {
+                "mode": "WHITELIST",
+                "spec": {
+                    "type": "HostList",
+                    "hosts": [
+                        "here.com"
+                    ]
+                }
+            },
+            "MOST_OPEN": {
+                "mode": "FULL_OPEN"
+            }
+        },
+        "minimumVersionCode": 0
+    },
+    {
+        "type": "Fixed",
+        "packageName": "com.waze",
+        "category": "NAVIGATION",
+        "networkPolicy": {
+            "mode": "BLACKLIST",
+            "spec": {
+                "type": "HostList",
+                "hosts": [
+                    "www.waze.com",
+                    "venue-image.waze.com",
+                    "ads-resources.waze.com",
+                    "ads-resources-legacy.waze.com",
+                    "adsassets.waze.com",
+                    "social.waze.co.il"
+                ]
+            }
+        },
+        "minimumVersionCode": 0
+    },
+    {
+        "type": "MultiMode",
+        "packageName": "com.kosher.video",
+        "category": "VIDEO",
+        "modeVariants": [
+            {
+                "userMode": "REDUCED_RISK",
+                "variants": [
+                    {
+                        "id": "strict",
+                        "label": "Strict – Torah content only",
+                        "policy": {
+                            "mode": "WHITELIST",
+                            "spec": {
+                                "type": "HostList",
+                                "hosts": [
+                                    "yutorah.org",
+                                    "shiurim.org"
+                                ]
+                            }
+                        }
+                    },
+                    {
+                        "id": "balanced",
+                        "label": "Balanced – curated kosher list",
+                        "policy": {
+                            "mode": "WHITELIST",
+                            "spec": {
+                                "type": "HostList",
+                                "hosts": [
+                                    "yutorah.org",
+                                    "shiurim.org",
+                                    "torahanytime.com"
+                                ]
+                            }
+                        }
+                    }
+                ],
+                "defaultVariantId": "balanced"
+            },
+            {
+                "userMode": "MOST_OPEN",
+                "variants": [
+                    {
+                        "id": "open",
+                        "label": "Fully open",
+                        "policy": {
+                            "mode": "FULL_OPEN"
+                        }
+                    }
+                ]
+            }
+        ],
+        "minimumVersionCode": 7
+    },
+    {
+        "type": "MultiMode",
+        "packageName": "com.youtube.tv",
+        "category": "VIDEO",
+        "modeVariants": [
+            {
+                "userMode": "GPS_ONLY",
+                "variants": [
+                    {
+                        "id": "strict",
+                        "label": "Strict (local only)",
+                        "policy": {
+                            "mode": "LOCAL_ONLY"
+                        }
+                    },
+                    {
+                        "id": "balanced",
+                        "label": "Balanced (whitelist)",
+                        "policy": {
+                            "mode": "WHITELIST",
+                            "spec": {
+                                "type": "HostList",
+                                "hosts": [
+                                    "googlevideo.com"
+                                ]
+                            }
+                        }
+                    }
+                ],
+                "defaultVariantId": "balanced"
+            },
+            {
+                "userMode": "MOST_OPEN",
+                "variants": [
+                    {
+                        "id": "open",
+                        "label": "Fully open",
+                        "policy": {
+                            "mode": "FULL_OPEN"
+                        }
+                    }
+                ]
+            }
+        ],
+        "minimumVersionCode": 123
+    },
+    {
+        "type": "ModeBased",
+        "packageName": "com.whatsapp",
+        "category": "COMMUNICATION",
+        "modePolicies": {
+            "OFFLINE": {
+                "mode": "LOCAL_ONLY"
+            },
+            "GPS_ONLY": {
+                "mode": "WHITELIST",
+                "spec": {
+                    "type": "HostList",
+                    "hosts": [
+                        "whatsapp.com"
+                    ]
+                }
+            }
+        },
+        "minimumVersionCode": 100
+    },
+    {
+        "type": "Fixed",
+        "packageName": "org.signal",
+        "category": "COMMUNICATION",
+        "networkPolicy": {
+            "mode": "WHITELIST",
+            "spec": {
+                "type": "HostList",
+                "hosts": [
+                    "signal.org"
+                ]
+            }
+        },
+        "minimumVersionCode": 0
+    }
+]
+</file>
+
+<file path="generator/build.gradle.kts">
+plugins {
+    alias(libs.plugins.multiplatform)
+    alias(libs.plugins.kotlinx.serialization)
+}
+
+group = "io.github.kdroidfilter.database"
+version = "1.0.0"
+
+kotlin {
+    jvmToolchain(17)
+
+    jvm()
+    sourceSets {
+        commonMain.dependencies {
+            implementation(project(":core"))
+            implementation(libs.kotlinx.coroutines.core)
+            implementation(libs.kotlinx.coroutines.test)
+            implementation(libs.kotlinx.serialization.json)
+            implementation(libs.kermit)
+        }
+
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+        }
+
+        jvmMain.dependencies {
+            implementation(libs.kotlinx.coroutines.swing)
+        }
+
+
+    }
+
+    //https://kotlinlang.org/docs/native-objc-interop.html#export-of-kdoc-comments-to-generated-objective-c-headers
+    targets.withType<org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget> {
+        compilations["main"].compileTaskProvider.configure {
+            compilerOptions {
+                freeCompilerArgs.add("-Xexport-kdoc")
+            }
+        }
+    }
+
+}
+</file>
+
+<file path="gradle/wrapper/gradle-wrapper.properties">
+distributionBase=GRADLE_USER_HOME
+distributionPath=wrapper/dists
+distributionUrl=https\://services.gradle.org/distributions/gradle-8.12-bin.zip
+networkTimeout=10000
+validateDistributionUrl=true
+zipStoreBase=GRADLE_USER_HOME
+zipStorePath=wrapper/dists
+</file>
+
+<file path="gradle/libs.versions.toml">
+[versions]
+
+kotlin = "2.1.21"
+agp = "8.9.2"
+kotlinx-coroutines = "1.10.2"
+kotlinx-serialization = "1.8.1"
+kermit = "2.0.5"
+koin = "4.0.4"
+compose = "1.8.0"
+androidx-activityCompose = "1.10.1"
+
+[libraries]
+
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
+kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
+koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
+koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
+androidx-activityCompose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
+
+[plugins]
+
+multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+compose = { id = "org.jetbrains.compose", version.ref = "compose" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+android-application = { id = "com.android.application", version.ref = "agp" }
+</file>
+
+<file path="sample/composeApp/src/androidMain/kotlin/sample/app/main.kt">
+package sample.app
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+
+class AppActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContent { App() }
+    }
+}
+</file>
+
+<file path="sample/composeApp/src/androidMain/AndroidManifest.xml">
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application
+            android:icon="@android:mipmap/sym_def_app_icon"
+            android:label="sample"
+            android:theme="@android:style/Theme.Material.NoActionBar">
+        <activity
+            android:name=".AppActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+            android:launchMode="singleInstance"
+            android:windowSoftInputMode="adjustPan"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
+</file>
+
+<file path="sample/composeApp/src/commonMain/kotlin/sample/app/App.kt">
+package sample.app
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.text.BasicText
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+
+@Composable
+fun App() {
+    Box(
+        modifier = Modifier.fillMaxSize().background(Color.White),
+        contentAlignment = Alignment.Center
+    ) {
+        BasicText("")
+    }
+}
+</file>
+
+<file path="sample/composeApp/src/iosMain/kotlin/sample/app/main.kt">
+import androidx.compose.ui.window.ComposeUIViewController
+import platform.UIKit.UIViewController
+import sample.app.App
+
+fun MainViewController(): UIViewController = ComposeUIViewController { App() }
+</file>
+
+<file path="sample/composeApp/src/jvmMain/kotlin/sample/app/main.kt">
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.application
+import androidx.compose.ui.window.rememberWindowState
+import sample.app.App
+import java.awt.Dimension
+
+fun main() = application {
+    Window(
+        title = "sample",
+        state = rememberWindowState(width = 800.dp, height = 600.dp),
+        onCloseRequest = ::exitApplication,
+    ) {
+        window.minimumSize = Dimension(350, 600)
+        App()
+    }
+}
+</file>
+
+<file path="sample/composeApp/src/wasmJsMain/kotlin/sample/app/main.kt">
+import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.window.ComposeViewport
+import kotlinx.browser.document
+import sample.app.App
+
+@OptIn(ExperimentalComposeUiApi::class)
+fun main() {
+    val body = document.body ?: return
+    ComposeViewport(body) {
+        App()
+    }
+}
+</file>
+
+<file path="sample/composeApp/src/wasmJsMain/resources/index.html">
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>sample</title>
+        <style>
+            html,
+            body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+            }
+        </style>
+    </head>
+    <body></body>
+    <script src="sampleApp.js"></script>
+</html>
+</file>
+
+<file path="sample/composeApp/build.gradle.kts">
+import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+
+plugins {
+    alias(libs.plugins.multiplatform)
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.compose)
+}
+
+kotlin {
+    jvmToolchain(17)
+
+    jvm()
+    wasmJs {
+        browser()
+        binaries.executable()
+    }
+
+    sourceSets {
+        commonMain.dependencies {
+            implementation(compose.runtime)
+            implementation(compose.foundation)
+            implementation(project(":core"))
+        }
+
+
+        jvmMain.dependencies {
+            implementation(compose.desktop.currentOs)
+        }
+
+    }
+}
+
+
+
+compose.desktop {
+    application {
+        mainClass = "MainKt"
+
+        nativeDistributions {
+            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            packageName = "sample"
+            packageVersion = "1.0.0"
+        }
+    }
+}
+</file>
+
+<file path=".gitignore">
+*.iml
+.gradle
+.idea
+.kotlin
+.DS_Store
+build
+*/build
+captures
+.externalNativeBuild
+.cxx
+local.properties
+xcuserdata/
+Pods/
+*.jks
+*.gpg
+*yarn.lock
+</file>
+
+<file path="build.gradle.kts">
+plugins {
+    alias(libs.plugins.multiplatform).apply(false)
+    alias(libs.plugins.android.library).apply(false)
+    alias(libs.plugins.kotlinx.serialization).apply(false)
+    alias(libs.plugins.android.application).apply(false)
+}
+</file>
+
+<file path="gradle.properties">
+#Gradle
+org.gradle.jvmargs=-Xmx4G
+org.gradle.caching=true
+org.gradle.configuration-cache=true
+org.gradle.daemon=true
+org.gradle.parallel=true
+
+#Kotlin
+kotlin.code.style=official
+kotlin.daemon.jvmargs=-Xmx4G
+
+#Android
+android.useAndroidX=true
+android.nonTransitiveRClass=true
+</file>
+
+<file path="gradlew">
+#!/bin/sh
+
+#
+# Copyright © 2015-2021 the original authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+##############################################################################
+#
+#   Gradle start up script for POSIX generated by Gradle.
+#
+#   Important for running:
+#
+#   (1) You need a POSIX-compliant shell to run this script. If your /bin/sh is
+#       noncompliant, but you have some other compliant shell such as ksh or
+#       bash, then to run this script, type that shell name before the whole
+#       command line, like:
+#
+#           ksh Gradle
+#
+#       Busybox and similar reduced shells will NOT work, because this script
+#       requires all of these POSIX shell features:
+#         * functions;
+#         * expansions «$var», «${var}», «${var:-default}», «${var+SET}»,
+#           «${var#prefix}», «${var%suffix}», and «$( cmd )»;
+#         * compound commands having a testable exit status, especially «case»;
+#         * various built-in commands including «command», «set», and «ulimit».
+#
+#   Important for patching:
+#
+#   (2) This script targets any POSIX shell, so it avoids extensions provided
+#       by Bash, Ksh, etc; in particular arrays are avoided.
+#
+#       The "traditional" practice of packing multiple parameters into a
+#       space-separated string is a well documented source of bugs and security
+#       problems, so this is (mostly) avoided, by progressively accumulating
+#       options in "$@", and eventually passing that to Java.
+#
+#       Where the inherited environment variables (DEFAULT_JVM_OPTS, JAVA_OPTS,
+#       and GRADLE_OPTS) rely on word-splitting, this is performed explicitly;
+#       see the in-line comments for details.
+#
+#       There are tweaks for specific operating systems such as AIX, CygWin,
+#       Darwin, MinGW, and NonStop.
+#
+#   (3) This script is generated from the Groovy template
+#       https://github.com/gradle/gradle/blob/HEAD/subprojects/plugins/src/main/resources/org/gradle/api/internal/plugins/unixStartScript.txt
+#       within the Gradle project.
+#
+#       You can find Gradle at https://github.com/gradle/gradle/.
+#
+##############################################################################
+
+# Attempt to set APP_HOME
+
+# Resolve links: $0 may be a link
+app_path=$0
+
+# Need this for daisy-chained symlinks.
+while
+    APP_HOME=${app_path%"${app_path##*/}"}  # leaves a trailing /; empty if no leading path
+    [ -h "$app_path" ]
+do
+    ls=$( ls -ld "$app_path" )
+    link=${ls#*' -> '}
+    case $link in             #(
+      /*)   app_path=$link ;; #(
+      *)    app_path=$APP_HOME$link ;;
+    esac
+done
+
+# This is normally unused
+# shellcheck disable=SC2034
+APP_BASE_NAME=${0##*/}
+# Discard cd standard output in case $CDPATH is set (https://github.com/gradle/gradle/issues/25036)
+APP_HOME=$( cd "${APP_HOME:-./}" > /dev/null && pwd -P ) || exit
+
+# Use the maximum available, or set MAX_FD != -1 to use that value.
+MAX_FD=maximum
+
+warn () {
+    echo "$*"
+} >&2
+
+die () {
+    echo
+    echo "$*"
+    echo
+    exit 1
+} >&2
+
+# OS specific support (must be 'true' or 'false').
+cygwin=false
+msys=false
+darwin=false
+nonstop=false
+case "$( uname )" in                #(
+  CYGWIN* )         cygwin=true  ;; #(
+  Darwin* )         darwin=true  ;; #(
+  MSYS* | MINGW* )  msys=true    ;; #(
+  NONSTOP* )        nonstop=true ;;
+esac
+
+CLASSPATH=$APP_HOME/gradle/wrapper/gradle-wrapper.jar
+
+
+# Determine the Java command to use to start the JVM.
+if [ -n "$JAVA_HOME" ] ; then
+    if [ -x "$JAVA_HOME/jre/sh/java" ] ; then
+        # IBM's JDK on AIX uses strange locations for the executables
+        JAVACMD=$JAVA_HOME/jre/sh/java
+    else
+        JAVACMD=$JAVA_HOME/bin/java
+    fi
+    if [ ! -x "$JAVACMD" ] ; then
+        die "ERROR: JAVA_HOME is set to an invalid directory: $JAVA_HOME
+
+Please set the JAVA_HOME variable in your environment to match the
+location of your Java installation."
+    fi
+else
+    JAVACMD=java
+    if ! command -v java >/dev/null 2>&1
+    then
+        die "ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH.
+
+Please set the JAVA_HOME variable in your environment to match the
+location of your Java installation."
+    fi
+fi
+
+# Increase the maximum file descriptors if we can.
+if ! "$cygwin" && ! "$darwin" && ! "$nonstop" ; then
+    case $MAX_FD in #(
+      max*)
+        # In POSIX sh, ulimit -H is undefined. That's why the result is checked to see if it worked.
+        # shellcheck disable=SC2039,SC3045
+        MAX_FD=$( ulimit -H -n ) ||
+            warn "Could not query maximum file descriptor limit"
+    esac
+    case $MAX_FD in  #(
+      '' | soft) :;; #(
+      *)
+        # In POSIX sh, ulimit -n is undefined. That's why the result is checked to see if it worked.
+        # shellcheck disable=SC2039,SC3045
+        ulimit -n "$MAX_FD" ||
+            warn "Could not set maximum file descriptor limit to $MAX_FD"
+    esac
+fi
+
+# Collect all arguments for the java command, stacking in reverse order:
+#   * args from the command line
+#   * the main class name
+#   * -classpath
+#   * -D...appname settings
+#   * --module-path (only if needed)
+#   * DEFAULT_JVM_OPTS, JAVA_OPTS, and GRADLE_OPTS environment variables.
+
+# For Cygwin or MSYS, switch paths to Windows format before running java
+if "$cygwin" || "$msys" ; then
+    APP_HOME=$( cygpath --path --mixed "$APP_HOME" )
+    CLASSPATH=$( cygpath --path --mixed "$CLASSPATH" )
+
+    JAVACMD=$( cygpath --unix "$JAVACMD" )
+
+    # Now convert the arguments - kludge to limit ourselves to /bin/sh
+    for arg do
+        if
+            case $arg in                                #(
+              -*)   false ;;                            # don't mess with options #(
+              /?*)  t=${arg#/} t=/${t%%/*}              # looks like a POSIX filepath
+                    [ -e "$t" ] ;;                      #(
+              *)    false ;;
+            esac
+        then
+            arg=$( cygpath --path --ignore --mixed "$arg" )
+        fi
+        # Roll the args list around exactly as many times as the number of
+        # args, so each arg winds up back in the position where it started, but
+        # possibly modified.
+        #
+        # NB: a `for` loop captures its iteration list before it begins, so
+        # changing the positional parameters here affects neither the number of
+        # iterations, nor the values presented in `arg`.
+        shift                   # remove old arg
+        set -- "$@" "$arg"      # push replacement arg
+    done
+fi
+
+
+# Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
+DEFAULT_JVM_OPTS='"-Xmx64m" "-Xms64m"'
+
+# Collect all arguments for the java command:
+#   * DEFAULT_JVM_OPTS, JAVA_OPTS, JAVA_OPTS, and optsEnvironmentVar are not allowed to contain shell fragments,
+#     and any embedded shellness will be escaped.
+#   * For example: A user cannot expect ${Hostname} to be expanded, as it is an environment variable and will be
+#     treated as '${Hostname}' itself on the command line.
+
+set -- \
+        "-Dorg.gradle.appname=$APP_BASE_NAME" \
+        -classpath "$CLASSPATH" \
+        org.gradle.wrapper.GradleWrapperMain \
+        "$@"
+
+# Stop when "xargs" is not available.
+if ! command -v xargs >/dev/null 2>&1
+then
+    die "xargs is not available"
+fi
+
+# Use "xargs" to parse quoted args.
+#
+# With -n1 it outputs one arg per line, with the quotes and backslashes removed.
+#
+# In Bash we could simply go:
+#
+#   readarray ARGS < <( xargs -n1 <<<"$var" ) &&
+#   set -- "${ARGS[@]}" "$@"
+#
+# but POSIX shell has neither arrays nor command substitution, so instead we
+# post-process each arg (as a line of input to sed) to backslash-escape any
+# character that might be a shell metacharacter, then use eval to reverse
+# that process (while maintaining the separation between arguments), and wrap
+# the whole thing up as a single "set" statement.
+#
+# This will of course break if any of these variables contains a newline or
+# an unmatched quote.
+#
+
+eval "set -- $(
+        printf '%s\n' "$DEFAULT_JVM_OPTS $JAVA_OPTS $GRADLE_OPTS" |
+        xargs -n1 |
+        sed ' s~[^-[:alnum:]+,./:=@_]~\\&~g; ' |
+        tr '\n' ' '
+    )" '"$@"'
+
+exec "$JAVACMD" "$@"
+</file>
+
+<file path="gradlew.bat">
+@rem
+@rem Copyright 2015 the original author or authors.
+@rem
+@rem Licensed under the Apache License, Version 2.0 (the "License");
+@rem you may not use this file except in compliance with the License.
+@rem You may obtain a copy of the License at
+@rem
+@rem      https://www.apache.org/licenses/LICENSE-2.0
+@rem
+@rem Unless required by applicable law or agreed to in writing, software
+@rem distributed under the License is distributed on an "AS IS" BASIS,
+@rem WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+@rem See the License for the specific language governing permissions and
+@rem limitations under the License.
+@rem
+
+@if "%DEBUG%"=="" @echo off
+@rem ##########################################################################
+@rem
+@rem  Gradle startup script for Windows
+@rem
+@rem ##########################################################################
+
+@rem Set local scope for the variables with windows NT shell
+if "%OS%"=="Windows_NT" setlocal
+
+set DIRNAME=%~dp0
+if "%DIRNAME%"=="" set DIRNAME=.
+@rem This is normally unused
+set APP_BASE_NAME=%~n0
+set APP_HOME=%DIRNAME%
+
+@rem Resolve any "." and ".." in APP_HOME to make it shorter.
+for %%i in ("%APP_HOME%") do set APP_HOME=%%~fi
+
+@rem Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
+set DEFAULT_JVM_OPTS="-Xmx64m" "-Xms64m"
+
+@rem Find java.exe
+if defined JAVA_HOME goto findJavaFromJavaHome
+
+set JAVA_EXE=java.exe
+%JAVA_EXE% -version >NUL 2>&1
+if %ERRORLEVEL% equ 0 goto execute
+
+echo. 1>&2
+echo ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH. 1>&2
+echo. 1>&2
+echo Please set the JAVA_HOME variable in your environment to match the 1>&2
+echo location of your Java installation. 1>&2
+
+goto fail
+
+:findJavaFromJavaHome
+set JAVA_HOME=%JAVA_HOME:"=%
+set JAVA_EXE=%JAVA_HOME%/bin/java.exe
+
+if exist "%JAVA_EXE%" goto execute
+
+echo. 1>&2
+echo ERROR: JAVA_HOME is set to an invalid directory: %JAVA_HOME% 1>&2
+echo. 1>&2
+echo Please set the JAVA_HOME variable in your environment to match the 1>&2
+echo location of your Java installation. 1>&2
+
+goto fail
+
+:execute
+@rem Setup the command line
+
+set CLASSPATH=%APP_HOME%\gradle\wrapper\gradle-wrapper.jar
+
+
+@rem Execute Gradle
+"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %GRADLE_OPTS% "-Dorg.gradle.appname=%APP_BASE_NAME%" -classpath "%CLASSPATH%" org.gradle.wrapper.GradleWrapperMain %*
+
+:end
+@rem End local scope for the variables with windows NT shell
+if %ERRORLEVEL% equ 0 goto mainEnd
+
+:fail
+rem Set variable GRADLE_EXIT_CONSOLE if you need the _script_ return code instead of
+rem the _cmd.exe /c_ return code!
+set EXIT_CODE=%ERRORLEVEL%
+if %EXIT_CODE% equ 0 set EXIT_CODE=1
+if not ""=="%GRADLE_EXIT_CONSOLE%" exit %EXIT_CODE%
+exit /b %EXIT_CODE%
+
+:mainEnd
+if "%OS%"=="Windows_NT" endlocal
+
+:omega
+</file>
+
+<file path="README.MD">
+# 📄 Application Policy **JSON** Contribution Guide
+
+💡 **We accept pull requests *only* containing JSON policy files.** No Kotlin or source‑code changes are required for a typical policy contribution.
+
+---
+
+## 1️⃣ JSON Structures
+
+Below are the three supported shapes. Choose the one that matches your use‑case and copy the template.
+
+### 🏷 FixedPolicy
+
+```jsonc
+{
+  "type": "Fixed",                 // required
+  "packageName": "org.signal",
+  "category": "COMMUNICATION",
+  "minimumVersionCode": 0,
+  "networkPolicy": {
+    "mode": "WHITELIST",
+    "spec": {
+      "type": "HostList",
+      "hosts": ["signal.org"]
+    }
+  }
+}
+```
+
+### 🔄 ModeBasedPolicy
+
+```jsonc
+{
+  "type": "ModeBased",
+  "packageName": "com.whatsapp",
+  "category": "COMMUNICATION",
+  "minimumVersionCode": 0,
+  "modePolicies": {
+    "OFFLINE":  { "mode": "LOCAL_ONLY" },
+    "GPS_ONLY": {
+      "mode": "WHITELIST",
+      "spec": { "type": "HostList", "hosts": ["whatsapp.com"] }
+    },
+    "MOST_OPEN": { "mode": "FULL_OPEN" }
+  }
+}
+```
+
+### 🧩 MultiModePolicy (with variants)
+
+```jsonc
+{
+  "type": "MultiMode",
+  "packageName": "com.youtube.tv",
+  "category": "VIDEO",
+  "minimumVersionCode": 123,
+  "modeVariants": [
+    {
+      "userMode": "GPS_ONLY",
+      "variants": [
+        {
+          "id": "strict",
+          "label": "Strict (local only)",
+          "policy": { "mode": "LOCAL_ONLY" }
+        },
+        {
+          "id": "balanced",
+          "label": "Balanced (whitelist)",
+          "policy": {
+            "mode": "WHITELIST",
+            "spec": { "type": "HostList", "hosts": ["googlevideo.com"] }
+          }
+        }
+      ],
+      "defaultVariantId": "balanced"
+    },
+    {
+      "userMode": "MOST_OPEN",
+      "variants": [
+        {
+          "id": "open",
+          "label": "Fully open",
+          "policy": { "mode": "FULL_OPEN" }
+        }
+      ]
+    }
+  ]
+}
+```
+
+---
+
+## 2️⃣ Contribution Checklist 📋
+
+1. **Fork** the repository and create a feature branch.
+2. Pick the template above that matches your needs.
+3. Replace the placeholder values with real data.
+4. **Validate** your JSON with [https://jsonlint.com/](https://jsonlint.com/) or any linter of your choice.
+5. Save the file under:
+
+   ```text
+   app-policies/<category>/<packageName>.json
+   ```
+6. Commit 💾 **only the JSON file** and open a PR. Provide a clear title & description.
+
+🚦 *CI will fail if the file is not valid JSON or is placed in the wrong folder.*
+
+---
+
+## 3️⃣ Directory Layout 📂
+
+```
+app-policies/
+  communication/
+    org.signal.json
+  video/
+    com.youtube.tv.json
+  …
+```
+
+Each category maps to its own folder for easier browsing and merge‑conflict avoidance.
+
+---
+
+## 4️⃣ Best Practices 💡
+
+| ✅ Do                                       | 🚫 Don’t                                   |
+| ------------------------------------------ | ------------------------------------------ |
+| Use **2‑space indentation**                | Commit tabs or mixed spacing               |
+| Keep keys in **lowerCamelCase**            | Add extra, undocumented keys               |
+| Re‑use **stable `id` values** for variants | Force‑push breaking changes without notice |
+| Group related apps in one PR               | Mix unrelated apps & categories            |
+
+---
+
+## 5️⃣ Reference Values 🧭
+
+**NetworkMode**: `FULL_OPEN`, `BLACKLIST`, `WHITELIST`, `LOCAL_ONLY`
+**ModeSpec.type**: `None`, `HostList`
+**UserMode**: `OFFLINE`, `LOCAL_ONLY`, `GPS_ONLY`, `GPS_AND_MAIL`, `REDUCED_RISK`, `MOST_OPEN`
+**AppCategory** (excerpt): `COMMUNICATION`, `PRODUCTIVITY`, `VIDEO`, …
+
+---
+
+### 💬 Need Help?
+
+Open an issue or mention **@your‑team** in the PR—responses within 24 h. 🙌
+</file>
+
+<file path="settings.gradle.kts">
+rootProject.name = "KDroidDatabase"
+
+pluginManagement {
+    repositories {
+        google {
+            content { 
+              	includeGroupByRegex("com\\.android.*")
+              	includeGroupByRegex("com\\.google.*")
+              	includeGroupByRegex("androidx.*")
+              	includeGroupByRegex("android.*")
+            }
+        }
+        gradlePluginPortal()
+        mavenCentral()
+    }
+}
+
+dependencyResolutionManagement {
+    repositories {
+        google {
+            content { 
+              	includeGroupByRegex("com\\.android.*")
+              	includeGroupByRegex("com\\.google.*")
+              	includeGroupByRegex("androidx.*")
+              	includeGroupByRegex("android.*")
+            }
+        }
+        mavenCentral()
+    }
+}
+include(":core")
+include(":generator")
+include(":sample:composeApp")
+</file>
+
+</files>

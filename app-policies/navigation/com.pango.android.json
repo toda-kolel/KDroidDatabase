@@ -1,0 +1,15 @@
+{
+  "type": "Fixed",
+  "packageName": "com.pango.android",
+  "category": "NAVIGATION",
+  "networkPolicy": {
+    "mode": "BLACKLIST",
+    "spec": {
+      "type": "HostList",
+      "hosts": [
+        "*.pango.co.il"
+      ]
+    }
+  },
+  "minimumVersionCode": 110603
+}

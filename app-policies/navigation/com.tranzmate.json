@@ -1,0 +1,16 @@
+{
+  "type": "Fixed",
+  "packageName": "com.tranzmate",
+  "category": "NAVIGATION",
+  "networkPolicy": {
+    "mode": "BLACKLIST",
+    "spec": {
+      "type": "HostList",
+      "hosts": [
+        "*.moovit.com",
+        "*.support.moovitapp.com"
+      ]
+    }
+  },
+  "minimumVersionCode": 593
+}

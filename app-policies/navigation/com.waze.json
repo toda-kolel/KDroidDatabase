@@ -1,0 +1,20 @@
+{
+  "type": "Fixed",
+  "packageName": "com.waze",
+  "category": "NAVIGATION",
+  "networkPolicy": {
+    "mode": "BLACKLIST",
+    "spec": {
+      "type": "HostList",
+      "hosts": [
+        "www.waze.com",
+        "venue-image.waze.com",
+        "ads-resources.waze.com",
+        "ads-resources-legacy.waze.com",
+        "adsassets.waze.com",
+        "social.waze.co.il"
+      ]
+    }
+  },
+  "minimumVersionCode": 1030416
+}
