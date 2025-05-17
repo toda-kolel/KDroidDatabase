@@ -1,24 +1,43 @@
 {
-  "type": "Fixed",
+  "type": "MultiMode",
   "packageName": "com.whatsapp",
   "category": "COMMUNICATION",
   "minimumVersionCode": 0,
-  "networkPolicy": {
-    "mode": "WHITELIST",
-    "spec": {
-      "type": "HostList",
-      "hosts": [
-        "v.whatsapp.net",
-        "static.whatsapp.net",
-        "firebaseinstallations.googleapis.com",
-        "time.android.com",
-        "dit.whatsapp.net",
-        "e1.whatsapp.net",
-        "mmg.whatsapp.net",
-        "g.whatsapp.net"
-      ]
+  "modeVariants": [
+    {
+      "userMode": "MOST_OPEN",
+      "variants": [
+        {
+          "id": "open",
+          "label": "Fully open",
+          "policy": {
+            "mode": "FULL_OPEN"
+          }
+        },
+        {
+          "id": "restricted",
+          "label": "Only messages, no photos, videos and calling",
+          "policy": {
+            "mode": "WHITELIST",
+            "spec": {
+              "type": "HostList",
+              "hosts": [
+                "v.whatsapp.net",
+                "static.whatsapp.net",
+                "firebaseinstallations.googleapis.com",
+                "time.android.com",
+                "dit.whatsapp.net",
+                "e1.whatsapp.net",
+                "mmg.whatsapp.net",
+                "g.whatsapp.net"
+              ]
+            }
+          }
+        }
+      ],
+      "defaultVariantId": "open"
     }
-  },
+  ],
   "detectionRules": [
     {
       "type": "NODE",
