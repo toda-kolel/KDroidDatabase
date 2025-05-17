@@ -1,6 +1,7 @@
 package io.github.kdroidfilter.database.core.policies
 
 import io.github.kdroidfilter.database.core.AppCategory
+import io.github.kdroidfilter.database.core.DetectionRule
 import io.github.kdroidfilter.database.core.NetworkPolicy
 import io.github.kdroidfilter.database.core.UserMode
 import kotlinx.serialization.SerialName
@@ -14,4 +15,5 @@ data class ModeBasedPolicy(
     override val category: AppCategory,
     val modePolicies: Map<UserMode, NetworkPolicy>,
     override val minimumVersionCode: Int,
+    override val detectionRules: List<DetectionRule> = emptyList()
 ) : AppPolicy

@@ -7,7 +7,7 @@
     "spec": {
       "type": "HostList",
       "hosts": [
-        "www.waze.com",
+        "*.waze.com",
         "venue-image.waze.com",
         "ads-resources.waze.com",
         "ads-resources-legacy.waze.com",

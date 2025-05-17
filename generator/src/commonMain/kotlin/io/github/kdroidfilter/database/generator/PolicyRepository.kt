@@ -11,7 +11,6 @@ import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 import java.nio.file.Files
 import java.nio.file.Path
-import java.nio.file.Paths
 import java.nio.file.StandardOpenOption
 import kotlin.io.path.extension
 import kotlin.io.path.isRegularFile
@@ -87,10 +86,3 @@ object PolicyRepository {
     }
 }
 
-fun main() {
-    val projectDir = Paths.get("").toAbsolutePath()
-    val root       = projectDir.parent.resolve("app-policies")
-    val output = Paths.get("all-policies.json")
-    PolicyRepository.exportAll(root, output)
-
-}
