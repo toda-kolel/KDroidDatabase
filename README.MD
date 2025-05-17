@@ -1,14 +1,54 @@
-# 📄 Application Policy **JSON** Contribution Guide
+# 📄 Application Policy JSON Contribution Guide
 
-💡 **We accept pull requests *only* containing JSON policy files.** No Kotlin or source‑code changes are required for a typical policy contribution.
+💡 **We accept pull requests *only* containing JSON policy files.** No Kotlin or source‑code changes should be included.
 
 ---
 
-## 1️⃣ JSON Structures
+## 📂 JSON Policy Schemas Overview
 
-Below are the three supported shapes. Choose the one that matches your use‑case and copy the template.
+Below is the hierarchical representation of the three supported policy types:
 
-### 🏷 FixedPolicy
+```text
+AppPolicy
+├── FixedPolicy
+│   ├── "type": "Fixed"
+│   ├── networkPolicy
+│   │   ├── mode: FULL_OPEN | BLACKLIST | WHITELIST | LOCAL_ONLY
+│   │   └── spec: None | HostList{hosts…}
+│   └── detectionRules […]
+│
+├── ModeBasedPolicy
+│   ├── "type": "ModeBased"
+│   ├── modePolicies
+│   │   ├── OFFLINE → NetworkPolicy{…}
+│   │   ├── GPS_ONLY → NetworkPolicy{…}
+│   │   ├── GPS_AND_MAIL → NetworkPolicy{…}
+│   │   ├── REDUCED_RISK → NetworkPolicy{…}
+│   │   └── MOST_OPEN → NetworkPolicy{…}
+│   └── detectionRules […]
+│
+└── MultiModePolicy
+    ├── "type": "MultiMode"
+    ├── modeVariants
+    │   ├── userMode: GPS_ONLY
+    │   │   ├── variants
+    │   │   │   ├── id: "strict",   policy: {mode: LOCAL_ONLY}
+    │   │   │   └── id: "balanced", policy: {mode: WHITELIST, spec: HostList[…]}
+    │   │   └── defaultVariantId: "balanced"
+    │   └── userMode: MOST_OPEN
+    │       ├── variants
+    │       │   └── id: "open", policy: {mode: FULL_OPEN}
+    │       └── defaultVariantId: "open"
+    └── detectionRules […]
+```
+
+---
+
+## 1️⃣ Templates for JSON Files
+
+Choose the template that matches your use-case and copy it:
+
+### 🏷 FixedPolicy
 
 ```jsonc
 {
@@ -26,7 +66,7 @@ Below are the three supported shapes. Choose the one that matches your use‑ca
 }
 ```
 
-### 🔄 ModeBasedPolicy
+### 🔄 ModeBasedPolicy
 
 ```jsonc
 {
@@ -45,7 +85,7 @@ Below are the three supported shapes. Choose the one that matches your use‑ca
 }
 ```
 
-### 🧩 MultiModePolicy (with variants)
+### 🧩 MultiModePolicy
 
 ```jsonc
 {
@@ -89,26 +129,22 @@ Below are the three supported shapes. Choose the one that matches your use‑ca
 
 ---
 
-## 2️⃣ Contribution Checklist 📋
+## 2️⃣ Contribution Checklist
 
-1. **Fork** the repository and create a feature branch.
-2. Pick the template above that matches your needs.
-3. Replace the placeholder values with real data.
-4. **Validate** your JSON with [https://jsonlint.com/](https://jsonlint.com/) or any linter of your choice.
-5. Save the file under:
+1. **Fork** the repository and create a new branch.
+2. **Select** the appropriate template above.
+3. **Edit** the placeholders with your real data.
+4. **Validate** your JSON with a linter (e.g., [jsonlint.com](https://jsonlint.com/)).
+5. **Place** the file under `app-policies/<category>/<packageName>.json`.
+6. **Commit** *only* the JSON file and open a PR with a clear title & description.
 
-   ```text
-   app-policies/<category>/<packageName>.json
-   ```
-6. Commit 💾 **only the JSON file** and open a PR. Provide a clear title & description.
-
-🚦 *CI will fail if the file is not valid JSON or is placed in the wrong folder.*
+🚦 CI will fail if the JSON is invalid or located in the wrong folder.
 
 ---
 
-## 3️⃣ Directory Layout 📂
+## 3️⃣ Directory Layout
 
-```
+```text
 app-policies/
   communication/
     org.signal.json
@@ -117,30 +153,10 @@ app-policies/
   …
 ```
 
-Each category maps to its own folder for easier browsing and merge‑conflict avoidance.
+Each category has its own folder for easy navigation and to avoid merge conflicts.
 
 ---
 
-## 4️⃣ Best Practices 💡
+## 💬 Need Help?
 
-| ✅ Do                                       | 🚫 Don’t                                   |
-| ------------------------------------------ | ------------------------------------------ |
-| Use **2‑space indentation**                | Commit tabs or mixed spacing               |
-| Keep keys in **lowerCamelCase**            | Add extra, undocumented keys               |
-| Re‑use **stable `id` values** for variants | Force‑push breaking changes without notice |
-| Group related apps in one PR               | Mix unrelated apps & categories            |
-
----
-
-## 5️⃣ Reference Values 🧭
-
-**NetworkMode**: `FULL_OPEN`, `BLACKLIST`, `WHITELIST`, `LOCAL_ONLY`
-**ModeSpec.type**: `None`, `HostList`
-**UserMode**: `OFFLINE`, `LOCAL_ONLY`, `GPS_ONLY`, `GPS_AND_MAIL`, `REDUCED_RISK`, `MOST_OPEN`
-**AppCategory** (excerpt): `COMMUNICATION`, `PRODUCTIVITY`, `VIDEO`, …
-
----
-
-### 💬 Need Help?
-
-Open an issue or mention **@your‑team** in the PR—responses within 24 h. 🙌
+Open an issue or mention **@your-team** in the PR—responses within 24 h. 🙌
