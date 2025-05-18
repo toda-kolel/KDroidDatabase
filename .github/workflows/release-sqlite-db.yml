@@ -49,7 +49,7 @@ jobs:
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@users.noreply.github.com"
-          git fetch --prune --unshallow
+          git fetch --prune 
           git tag "${{ env.RELEASE_NAME }}" "${{ github.sha }}"
           git push origin "${{ env.RELEASE_NAME }}"
 
