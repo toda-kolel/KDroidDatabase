@@ -1,0 +1,64 @@
+name: Release – SQLite DB
+
+on:
+  pull_request:
+    types: [closed]    # Trigger only when the PR is closed (merged or declined)
+
+jobs:
+  build-and-release:
+    if: github.event.pull_request.merged == true   # Ignore PRs closed without merging
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 2. Set up Java 17 for Gradle
+      - name: Set up Java 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      # 3. Cache Gradle dependencies
+      - name: Cache Gradle dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*','**/gradle-wrapper.properties') }}
+
+      # 4. Compile and generate the SQLite DB with jvmRun
+      - name: Build project and export SQLite DB
+        run: |
+          # Build everything once to fail fast on compilation errors
+          ./gradlew :generator:build --quiet
+          # Run the extractor (DB ends up in generator/build/policies.db)
+          ./gradlew :generator:jvmRun \
+            -DmainClass=io.github.kdroidfilter.database.generator.SqlLiteExtractorKt \
+            --quiet
+          ls -l generator/build/policies.db || (echo "DB not found!" && exit 1)
+
+      # 5. Define the release name (e.g. 202505181915)
+      - name: Define release name
+        id: relname
+        run: echo "RELEASE_NAME=$(date +'%Y%m%d%H%M')" >> "$GITHUB_ENV"
+
+      # 6. Create the GitHub release
+      - name: Create GitHub release
+        id: create_release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.RELEASE_NAME }}
+          name: ${{ env.RELEASE_NAME }}
+          draft: false
+          prerelease: false
+
+      # 7. Upload the SQLite DB to the release
+      - name: Upload policies.db to release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.create_release.outputs.tag_name }}
+          files: generator/build/policies.db
