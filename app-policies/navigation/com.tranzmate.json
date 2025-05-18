@@ -1,5 +1,6 @@
 {
   "type": "Fixed",
+  "desc" : "Moovit",
   "packageName": "com.tranzmate",
   "category": "NAVIGATION",
   "networkPolicy": {

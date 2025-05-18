@@ -1,6 +1,7 @@
 {
   "type": "ModeBased",
   "packageName": "com.google.android.gm",
+  "desc" : "Gmail",
   "category": "MAIL",
   "minimumVersionCode": 0,
   "modePolicies": {
