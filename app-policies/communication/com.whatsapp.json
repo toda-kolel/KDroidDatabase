@@ -62,17 +62,6 @@
     {
       "type": "NODE",
       "targets": [
-        "com.whatsapp:id/directory_description",
-        "com.whatsapp:id/updates_list",
-        "com.whatsapp:id/community_recycler_view"
-      ],
-      "condition": "ONLY_IF",
-      "action": "BLOCK_INTERNET",
-      "desc": "Disable Internet when entering on WhatsApp Updates List"
-    },
-    {
-      "type": "NODE",
-      "targets": [
         "com.whatsapp:id/newsletter_quick_forwarding_pill_container_key"
       ],
       "condition": "ONLY_IF",

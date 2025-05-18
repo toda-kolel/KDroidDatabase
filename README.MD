@@ -118,43 +118,49 @@ Use when each user mode has multiple variants, each with its own rules and optio
         {
           "id": "open",
           "label": "Fully open",
-          "policy": { "mode": "FULL_OPEN" },
-          "detectionRules": []
-          // omit overrideDefaultRules → defaults to true
+          "policy": {
+            "mode": "FULL_OPEN"
+          }
         },
         {
           "id": "restricted",
-          "label": "Messages only (no media)",
+          "label": "Only messages, no photos, videos and calling",
           "policy": {
             "mode": "WHITELIST",
-            "spec": { "type": "HostList", "hosts": ["v.whatsapp.net"] }
+            "spec": {
+              "type": "HostList",
+              "hosts": [
+                "v.whatsapp.net",
+                "static.whatsapp.net",
+                "firebaseinstallations.googleapis.com",
+                "time.android.com",
+                "dit.whatsapp.net",
+                "e1.whatsapp.net",
+                "mmg.whatsapp.net",
+                "g.whatsapp.net"
+              ]
+            }
+          }
+        },
+        {
+          "id": "block_groups",
+          "label": "Block groups",
+          "policy": {
+            "mode": "FULL_OPEN"
           },
           "detectionRules": [
             {
               "type": "NODE",
               "targets": [
-                "com.whatsapp:id/newsletter_quick_forwarding_pill_container_key"
+                "TODO"
               ],
               "condition": "ONLY_IF",
               "action": "KILL_APP"
             }
           ],
-          "overrideDefaultRules": false
-        },
-        {
-          "id": "groups_block",
-          "label": "Block groups",
-          "policy": { "mode": "FULL_OPEN" },
-          "detectionRules": [
-            {
-              "type": "NODE",
-              "targets": ["GROUP_IDENTIFIER"],
-              "condition": "ONLY_IF",
-              "action": "KILL_APP"
-            }
-          ],
-          "configurationRequired": true,
-          "configurationKey": "whatsapp_groups_prefs"
+          "overrideDefaultRules" : false,
+          "configurationRequired" : true,
+          "configurationKey" : "whatsapp_groups_prefs"
         }
       ],
       "defaultVariantId": "open"
@@ -162,10 +168,13 @@ Use when each user mode has multiple variants, each with its own rules and optio
   ],
   "detectionRules": [
     {
-      "type": "ACTIVITY",
-      "targets": ["com.whatsapp:id/main_activity"],
-      "condition": "EXCEPT_IF",
-      "action": "BLOCK_INTERNET"
+      "type": "NODE",
+      "targets": [
+        "com.whatsapp:id/newsletter_quick_forwarding_pill_container_key"
+      ],
+      "condition": "ONLY_IF",
+      "action": "KILL_APP",
+      "desc": "Kill app when entering on WhatsApp Update channel"
     }
   ]
 }
