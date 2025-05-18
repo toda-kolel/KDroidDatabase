@@ -14,7 +14,9 @@ data class PolicyVariant(
     val label: String,         // e.g. "Strict (no external hosts)"
     val policy: NetworkPolicy,  // associated filtering rule
     val detectionRules: List<DetectionRule> = emptyList(),
-    val overrideDefaultRules: Boolean = true
+    val overrideDefaultRules: Boolean = true,
+    val configurationRequired: Boolean = false,
+    val configurationKey: String? = null
 )
 
 /** Group of variants available for a given UserMode. */
@@ -46,7 +48,7 @@ data class MultiModePolicy(
         val mv = modeVariants.first { it.userMode == mode }
         val id = chosenId ?: mv.defaultVariantId
         val variant = mv.variants.first { it.id == id }
-        // fusionne règles globales + règles spécifiques au variant
+        // merges global rules + variant-specific rules
         val rules = if (variant.overrideDefaultRules) {
             variant.detectionRules
         } else {
