@@ -1,0 +1,15 @@
+{
+  "type": "Fixed",
+  "packageName": "co.il.jdn.new_app",
+  "category": "NEWS",
+  "minimumVersionCode": 0,
+  "networkPolicy": {
+    "mode": "WHITELIST",
+    "spec": {
+      "type": "HostList",
+      "hosts": [
+        "www.jdn.co.il"
+      ]
+    }
+  }
+}
