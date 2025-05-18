@@ -1,0 +1,9 @@
+{
+  "type": "Fixed",
+  "packageName": "net.calj.android",
+  "category": "TORAH",
+  "minimumVersionCode": 0,
+  "networkPolicy": {
+    "mode": "FULL_OPEN"
+  }
+}
