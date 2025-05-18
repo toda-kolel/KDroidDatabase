@@ -1,4 +1,6 @@
-# 📄 JSON Policy Contribution Guide
+# 📄 Kdroid Database Policies Contribution Guide
+
+Welcome to the community-driven database of kosher filtering rules for applications. This guide is primarily used by KDroid Filter but is freely available for anyone to use. Licensed under the LGPL, you may integrate these policies even in closed-source applications. At this stage, it is recommended to contribute only host-based rules, as the tools for detecting apps and UI nodes are not yet available.
 
 ---
 
