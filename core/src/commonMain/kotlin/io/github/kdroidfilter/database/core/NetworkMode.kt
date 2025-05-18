@@ -8,7 +8,8 @@ enum class NetworkMode {
     FULL_OPEN,      // No restrictions
     BLACKLIST,      // Block specific hosts
     WHITELIST,      // Allow only specific hosts
-    LOCAL_ONLY      // Allow only local network access
+    LOCAL_ONLY,      // Allow only local network access
+    OFFLINE         // Disable network access
 }
 
 // 2. Optional details depending on mode

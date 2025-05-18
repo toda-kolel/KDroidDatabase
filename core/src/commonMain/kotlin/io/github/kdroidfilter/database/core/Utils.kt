@@ -9,7 +9,7 @@ fun resolvePolicy(policy: AppPolicy, userMode: UserMode, variantId: String? = nu
     return when (policy) {
         is FixedPolicy -> policy.networkPolicy
         is ModeBasedPolicy -> policy.modePolicies[userMode]
-            ?: NetworkPolicy(NetworkMode.LOCAL_ONLY) // fallback if mode missing
+            ?: NetworkPolicy(NetworkMode.OFFLINE) // fallback if mode missing
         is MultiModePolicy -> policy.resolveDetailed(userMode, variantId)
     } as NetworkPolicy
 }

@@ -1,0 +1,9 @@
+{
+  "type": "Fixed",
+  "packageName": "org.videolan.vlc",
+  "category": "VIDEO",
+  "minimumVersionCode": 0,
+  "networkPolicy": {
+    "mode": "OFFLINE"
+  }
+}
