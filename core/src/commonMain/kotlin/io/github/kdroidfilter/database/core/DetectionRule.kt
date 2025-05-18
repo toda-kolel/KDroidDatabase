@@ -37,5 +37,5 @@ data class DetectionRule(
     val type: DetectionType,
     val targets: List<String> = emptyList(),
     val condition: DetectionCondition = DetectionCondition.ONLY_IF,
-    val action: DetectionAction
+    val action: DetectionAction,
 )
