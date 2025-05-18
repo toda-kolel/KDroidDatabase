@@ -17,7 +17,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        with: { fetch-depth: 0 }
+        with:
+          fetch-depth: 0
 
       - name: Set up Java 17
         uses: actions/setup-java@v3
@@ -43,7 +44,7 @@ jobs:
 
       - name: Define release name
         id: relname
-        run: echo "RELEASE_NAME=$(date +'%Y%m%d%H%M')" >> "$GITHUB_ENV"
+        run: echo "RELEASE_NAME=$(date +'%Y%m%d%H%M')" >> $GITHUB_ENV
 
       - name: Create and push tag
         run: |
@@ -53,15 +54,9 @@ jobs:
           git tag "${{ env.RELEASE_NAME }}" "${{ github.sha }}"
           git push origin "${{ env.RELEASE_NAME }}"
 
-      - name: Create GitHub release
-        id: create_release
+      - name: Create GitHub release and upload artifact
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ env.RELEASE_NAME }}
           name: ${{ env.RELEASE_NAME }}
-
-      - name: Upload policies.db to release
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: ${{ steps.create_release.outputs.tag_name }}
           files: generator/build/policies.db
