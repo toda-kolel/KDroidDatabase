@@ -1,7 +1,5 @@
 # 📄 JSON Policy Contribution Guide
 
-✨ **We accept pull requests *only* containing JSON policy files.** No code changes or Kotlin sources.
-
 ---
 
 ```text
@@ -9,7 +7,7 @@ AppPolicy
 ├── FixedPolicy
 │   ├── "type": "Fixed"
 │   ├── networkPolicy
-│   │   ├── mode: FULL_OPEN | BLACKLIST | WHITELIST | LOCAL_ONLY
+│   │   ├── mode: FULL_OPEN | BLACKLIST | WHITELIST | LOCAL_ONLY | OFFLINE
 │   │   └── spec: None | HostList{hosts…}
 │   └── detectionRules […]
 │
@@ -67,16 +65,23 @@ Use when the same network rules apply to all modes.
 ```json
 {
   "type": "Fixed",
-  "packageName": "org.signal",
-  "category": "COMMUNICATION",
-  "minimumVersionCode": 0,
+  "packageName": "com.waze",
+  "category": "NAVIGATION",
   "networkPolicy": {
-    "mode": "WHITELIST",
+    "mode": "BLACKLIST",
     "spec": {
       "type": "HostList",
-      "hosts": ["signal.org"]
+      "hosts": [
+        "*.waze.com",
+        "venue-image.waze.com",
+        "ads-resources.waze.com",
+        "ads-resources-legacy.waze.com",
+        "adsassets.waze.com",
+        "social.waze.co.il"
+      ]
     }
-  }
+  },
+  "minimumVersionCode": 1030416
 }
 ```
 
@@ -184,8 +189,8 @@ Use when each user mode has multiple variants, each with its own rules and optio
 * Root-level `detectionRules` apply across all variants.
 * Within each variant:
 
-    * `detectionRules`: rules specific to that variant.
-    * `overrideDefaultRules`: `true` (default) to use only variant rules, `false` to merge with root rules.
+  * `detectionRules`: rules specific to that variant.
+  * `overrideDefaultRules`: `true` (default) to use only variant rules, `false` to merge with root rules.
 
 ---
 
@@ -194,6 +199,26 @@ Use when each user mode has multiple variants, each with its own rules and optio
 1. 🔎 **Validate JSON** with a linter (e.g., [jsonlint.com](https://jsonlint.com/)).
 2. 📂 **Place** your file under the correct category folder.
 3. 📜 **Commit only** the JSON file—no code or docs changes.
-4. 📝 **PR title** should clearly state the app package and policy type.
+4. 📝 **PR title** should clearly state the app package.
 
 CI will reject invalid JSON or misplaced files. Good luck! 🙌
+
+---
+
+## ❓ Questions & Answers
+
+### What is the difference between `LOCAL_ONLY` and `OFFLINE`?
+
+Both modes block all outbound Internet traffic; the distinction is mainly about the user experience:
+
+| Mode            | Behaviour                                                                                                                                                                                                | When to choose it?                                                                                                                            |
+| --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| **LOCAL\_ONLY** | KDroid filters the connection **as soon as the app is opened** and shows a notification prompting the user to enable “Local mode”. Only local network traffic (Wi‑Fi/LAN — e.g. 192.168.x.x) is allowed. | Apps whose **main purpose relies on the local network**, such as smart‑home controllers, drone control apps, or Wi‑Fi file transfer tools.    |
+| **OFFLINE**     | No network traffic is allowed at all (neither Internet nor LAN). KDroid shows **no notification**.                                                                                                       | Apps that are **primarily offline** and nearly never need local network access, e.g. video players, document viewers, or single‑player games. |
+
+**In short**
+
+* Pick **`LOCAL_ONLY`** when the user needs to talk to nearby devices (NAS, Chromecast, smart lights, etc.). The notification helps them enable local mode quickly.
+* Pick **`OFFLINE`** for apps that work perfectly without any network so you avoid showing an unnecessary notification.
+
+---
