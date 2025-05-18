@@ -1,12 +1,8 @@
-# 📄 Application Policy JSON Contribution Guide
+# 📄 JSON Policy Contribution Guide
 
-💡 **We accept pull requests *only* containing JSON policy files.** No Kotlin or source‑code changes should be included.
+✨ **We accept pull requests *only* containing JSON policy files.** No code changes or Kotlin sources.
 
 ---
-
-## 📂 JSON Policy Schemas Overview
-
-Below is the hierarchical representation of the three supported policy types:
 
 ```text
 AppPolicy
@@ -42,17 +38,35 @@ AppPolicy
     └── detectionRules […]
 ```
 
+## 🗂️ Directory Structure
+
+Place your JSON file under:
+
+```
+app-policies/<category>/<packageName>.json
+```
+
+Example:
+
+```
+app-policies/navigation/com.example.app.json
+```
+
+Each category folder (e.g., `communication`, `navigation`, `video`) helps avoid merge conflicts and keeps things tidy. 🚀
+
 ---
 
-## 1️⃣ Templates for JSON Files
+## 📐 Supported Policy Types & Templates
 
-Choose the template that matches your use-case and copy it:
+Below are the three policy types. Copy the template that matches your use case and fill in your data.
 
-### 🏷 FixedPolicy
+### 1️⃣ FixedPolicy
 
-```jsonc
+Use when the same network rules apply to all modes.
+
+```json
 {
-  "type": "Fixed",                 // required
+  "type": "Fixed",
   "packageName": "org.signal",
   "category": "COMMUNICATION",
   "minimumVersionCode": 0,
@@ -66,14 +80,16 @@ Choose the template that matches your use-case and copy it:
 }
 ```
 
-### 🔄 ModeBasedPolicy
+### 2️⃣ ModeBasedPolicy
 
-```jsonc
+Use when you need different rules per user mode.
+
+```json
 {
   "type": "ModeBased",
   "packageName": "com.whatsapp",
   "category": "COMMUNICATION",
-  "minimumVersionCode": 0,
+  "minimumVersionCode": 100,
   "modePolicies": {
     "OFFLINE":  { "mode": "LOCAL_ONLY" },
     "GPS_ONLY": {
@@ -85,78 +101,77 @@ Choose the template that matches your use-case and copy it:
 }
 ```
 
-### 🧩 MultiModePolicy
+### 3️⃣ MultiModePolicy
 
-```jsonc
+Use when each user mode has multiple variants, each with its own rules and optional activity/node detections.
+
+```json
 {
   "type": "MultiMode",
-  "packageName": "com.youtube.tv",
-  "category": "VIDEO",
-  "minimumVersionCode": 123,
+  "packageName": "com.whatsapp",
+  "category": "COMMUNICATION",
+  "minimumVersionCode": 0,
   "modeVariants": [
-    {
-      "userMode": "GPS_ONLY",
-      "variants": [
-        {
-          "id": "strict",
-          "label": "Strict (local only)",
-          "policy": { "mode": "LOCAL_ONLY" }
-        },
-        {
-          "id": "balanced",
-          "label": "Balanced (whitelist)",
-          "policy": {
-            "mode": "WHITELIST",
-            "spec": { "type": "HostList", "hosts": ["googlevideo.com"] }
-          }
-        }
-      ],
-      "defaultVariantId": "balanced"
-    },
     {
       "userMode": "MOST_OPEN",
       "variants": [
         {
           "id": "open",
           "label": "Fully open",
-          "policy": { "mode": "FULL_OPEN" }
+          "policy": { "mode": "FULL_OPEN" },
+          "detectionRules": []
+          // omit overrideDefaultRules → defaults to true
+        },
+        {
+          "id": "restricted",
+          "label": "Messages only (no media)",
+          "policy": {
+            "mode": "WHITELIST",
+            "spec": { "type": "HostList", "hosts": ["v.whatsapp.net"] }
+          },
+          "detectionRules": [
+            {
+              "type": "NODE",
+              "targets": [
+                "com.whatsapp:id/newsletter_quick_forwarding_pill_container_key"
+              ],
+              "condition": "ONLY_IF",
+              "action": "KILL_APP"
+            }
+          ],
+          "overrideDefaultRules": false
         }
-      ]
+      ],
+      "defaultVariantId": "open"
+    }
+  ],
+  "detectionRules": [
+    {
+      "type": "ACTIVITY",
+      "targets": ["com.whatsapp:id/main_activity"],
+      "condition": "EXCEPT_IF",
+      "action": "BLOCK_INTERNET"
     }
   ]
 }
 ```
 
----
+* `detectionRules` at the root apply across all variants.
+* Within each variant:
 
-## 2️⃣ Contribution Checklist
+    * `detectionRules`: rules specific to that variant.
+    * `overrideDefaultRules` (boolean):
 
-1. **Fork** the repository and create a new branch.
-2. **Select** the appropriate template above.
-3. **Edit** the placeholders with your real data.
-4. **Validate** your JSON with a linter (e.g., [jsonlint.com](https://jsonlint.com/)).
-5. **Place** the file under `app-policies/<category>/<packageName>.json`.
-6. **Commit** *only* the JSON file and open a PR with a clear title & description.
-
-🚦 CI will fail if the JSON is invalid or located in the wrong folder.
+        * `true` (default): only variant rules apply.
+        * `false`: merge root rules + variant rules (set explicitly).
 
 ---
 
-## 3️⃣ Directory Layout
+## ✅ Checklist Before Submitting
 
-```text
-app-policies/
-  communication/
-    org.signal.json
-  video/
-    com.youtube.tv.json
-  …
-```
+1. 🔎 **Validate JSON** with a linter (e.g., [jsonlint.com](https://jsonlint.com/)).
+2. 📂 **Place** your file under the correct category folder.
+3. 📜 **Commit only** the JSON file—no code or docs changes.
+4. 📝 **PR title** should clearly state the app package and policy type.
 
-Each category has its own folder for easy navigation and to avoid merge conflicts.
-
----
-
-## 💬 Need Help?
-
-Open an issue or mention **@your-team** in the PR—responses within 24 h. 🙌
+CI will reject invalid JSON or misplaced files. Good luck! 🙌

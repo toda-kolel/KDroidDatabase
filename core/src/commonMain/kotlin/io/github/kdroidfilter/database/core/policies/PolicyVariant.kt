@@ -12,7 +12,9 @@ import kotlinx.serialization.Serializable
 data class PolicyVariant(
     val id: String,            // e.g. "strict", "balanced", "relaxed"
     val label: String,         // e.g. "Strict (no external hosts)"
-    val policy: NetworkPolicy  // associated filtering rule
+    val policy: NetworkPolicy,  // associated filtering rule
+    val detectionRules: List<DetectionRule> = emptyList(),
+    val overrideDefaultRules: Boolean = true
 )
 
 /** Group of variants available for a given UserMode. */
@@ -21,6 +23,12 @@ data class ModeVariants(
     val userMode: UserMode,
     val variants: List<PolicyVariant>,
     val defaultVariantId: String = variants.first().id
+)
+
+@Serializable
+data class ResolvedPolicy(
+    val networkPolicy: NetworkPolicy,
+    val detectionRules: List<DetectionRule>
 )
 
 /** Complete policy: several user modes, each with multiple variants. */
@@ -34,9 +42,16 @@ data class MultiModePolicy(
 ) : AppPolicy {
 
     /** Returns the effective NetworkPolicy for the specified mode and variant. */
-    fun resolve(mode: UserMode, chosenId: String? = null): NetworkPolicy {
+    fun resolveDetailed(mode: UserMode, chosenId: String? = null): ResolvedPolicy {
         val mv = modeVariants.first { it.userMode == mode }
         val id = chosenId ?: mv.defaultVariantId
-        return mv.variants.first { it.id == id }.policy
+        val variant = mv.variants.first { it.id == id }
+        // fusionne règles globales + règles spécifiques au variant
+        val rules = if (variant.overrideDefaultRules) {
+            variant.detectionRules
+        } else {
+            this.detectionRules + variant.detectionRules
+        }
+        return ResolvedPolicy(variant.policy, rules)
     }
 }
