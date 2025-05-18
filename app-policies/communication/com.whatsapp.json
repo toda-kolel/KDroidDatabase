@@ -33,6 +33,24 @@
               ]
             }
           }
+        },
+        {
+          "id": "block_groups",
+          "label": "Block groups",
+          "policy": {
+            "mode": "FULL_OPEN"
+          },
+          "detectionRules": [
+            {
+              "type": "NODE",
+              "targets": [
+                "TODO"
+              ],
+              "condition": "ONLY_IF",
+              "action": "KILL_APP"
+            }
+          ],
+          "overrideDefaultRules" : false
         }
       ],
       "defaultVariantId": "open"
