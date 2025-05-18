@@ -50,7 +50,9 @@
               "action": "KILL_APP"
             }
           ],
-          "overrideDefaultRules" : false
+          "overrideDefaultRules" : false,
+          "configurationRequired" : true,
+          "configurationKey" : "whatsapp_groups_prefs"
         }
       ],
       "defaultVariantId": "open"
