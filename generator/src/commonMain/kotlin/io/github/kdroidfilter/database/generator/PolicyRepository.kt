@@ -19,7 +19,7 @@ object PolicyRepository {
     /**
      * JSON configuration: polymorphism, ignore unknown keys, pretty print
      */
-    private val json = Json {
+    internal val json = Json {
         classDiscriminator = "type"
         ignoreUnknownKeys = true
         encodeDefaults = false

@@ -25,6 +25,8 @@ kotlin {
 
         jvmMain.dependencies {
             implementation(libs.kotlinx.coroutines.swing)
+            implementation("org.xerial:sqlite-jdbc:3.45.2.0")
+
         }
 
 
