@@ -87,19 +87,32 @@ Use when you need different rules per user mode.
 ```json
 {
   "type": "ModeBased",
-  "packageName": "com.whatsapp",
-  "category": "COMMUNICATION",
-  "minimumVersionCode": 100,
+  "packageName": "com.google.android.gm",
+  "category": "MAIL",
+  "minimumVersionCode": 0,
   "modePolicies": {
-    "OFFLINE":  { "mode": "LOCAL_ONLY" },
-    "GPS_ONLY": {
-      "mode": "WHITELIST",
-      "spec": { "type": "HostList", "hosts": ["whatsapp.com"] }
+    "GPS_AND_MAIL": {
+      "mode": "BLACKLIST",
+      "desc": "Allow only mails and block Google Chat",
+      "spec": {
+        "type": "HostList",
+        "hosts": [
+          "HOST_OF_GOOGLE_CHAT"
+        ]
+      }
     },
-    "MOST_OPEN": { "mode": "FULL_OPEN" }
+    "REDUCED_RISK": {
+      "mode": "FULL_OPEN"
+    }
   }
 }
 ```
+
+> 🛠 **Optional Key: `desc`**
+> You can add a `"desc"` field at the same level as `mode` or `spec` to describe what this policy does. It is intended for human readers and will be stripped out at compile time.
+>
+> 🔄 **Mode Inheritance**
+> If you define a policy for `REDUCED_RISK` but do not provide one for a higher mode (e.g., `MOST_OPEN`), the `REDUCED_RISK` policy will automatically apply to those modes when no other configuration is available.
 
 ### 3️⃣ MultiModePolicy
 
@@ -118,9 +131,7 @@ Use when each user mode has multiple variants, each with its own rules and optio
         {
           "id": "open",
           "label": "Fully open",
-          "policy": {
-            "mode": "FULL_OPEN"
-          }
+          "policy": { "mode": "FULL_OPEN" }
         },
         {
           "id": "restricted",
@@ -131,13 +142,7 @@ Use when each user mode has multiple variants, each with its own rules and optio
               "type": "HostList",
               "hosts": [
                 "v.whatsapp.net",
-                "static.whatsapp.net",
-                "firebaseinstallations.googleapis.com",
-                "time.android.com",
-                "dit.whatsapp.net",
-                "e1.whatsapp.net",
-                "mmg.whatsapp.net",
-                "g.whatsapp.net"
+                "static.whatsapp.net"
               ]
             }
           }
@@ -145,22 +150,18 @@ Use when each user mode has multiple variants, each with its own rules and optio
         {
           "id": "block_groups",
           "label": "Block groups",
-          "policy": {
-            "mode": "FULL_OPEN"
-          },
+          "policy": { "mode": "FULL_OPEN" },
           "detectionRules": [
             {
               "type": "NODE",
-              "targets": [
-                "TODO"
-              ],
+              "targets": ["TODO"],
               "condition": "ONLY_IF",
               "action": "KILL_APP"
             }
           ],
-          "overrideDefaultRules" : false,
-          "configurationRequired" : true,
-          "configurationKey" : "whatsapp_groups_prefs"
+          "overrideDefaultRules": false,
+          "configurationRequired": true,
+          "configurationKey": "whatsapp_groups_prefs"
         }
       ],
       "defaultVariantId": "open"
@@ -174,33 +175,19 @@ Use when each user mode has multiple variants, each with its own rules and optio
       ],
       "condition": "ONLY_IF",
       "action": "KILL_APP",
-      "desc": "Kill app when entering on WhatsApp Update channel"
+      "desc": "Kill app when entering the WhatsApp Update channel"
     }
   ]
 }
 ```
 
-* `detectionRules` at the root apply across all variants.
+* Root-level `detectionRules` apply across all variants.
 * Within each variant:
 
     * `detectionRules`: rules specific to that variant.
-    * `overrideDefaultRules` (boolean):
-
-        * `true` (default): only variant rules apply.
-        * `false`: merge root rules + variant rules (set explicitly).
+    * `overrideDefaultRules`: `true` (default) to use only variant rules, `false` to merge with root rules.
 
 ---
-
-🧩 About configurationRequired and configurationKey
-Some MultiModePolicy variants may require user configuration (for example, specifying allowed or blocked WhatsApp groups). To support this, a variant can define:
-
-configurationRequired: true → Signals the app that this variant needs extra user input (e.g., group names).
-
-configurationKey: "..." → A unique key used to link user input to the policy variant.
-
-The app is expected to query this configuration during enforcement. The backend does not define values—only the key.
-
-
 
 ## ✅ Checklist Before Submitting
 
