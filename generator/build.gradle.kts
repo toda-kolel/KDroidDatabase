@@ -26,6 +26,7 @@ kotlin {
         jvmMain.dependencies {
             implementation(libs.kotlinx.coroutines.swing)
             implementation(libs.sqlite.jdbc)
+            implementation(libs.maven.slf4j.provider)
         }
 
 
