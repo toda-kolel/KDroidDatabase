@@ -55,6 +55,7 @@ jobs:
           name: ${{ env.RELEASE_NAME }}
           draft: false
           prerelease: false
+          make_latest: true
 
       # 7. Upload the SQLite DB to the release
       - name: Upload policies.db to release
