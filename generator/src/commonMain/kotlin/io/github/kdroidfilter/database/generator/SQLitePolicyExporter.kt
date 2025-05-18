@@ -1,16 +1,13 @@
 package io.github.kdroidfilter.database.generator
 
 import io.github.kdroidfilter.database.core.policies.AppPolicy
-import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.modules.SerializersModule
-import kotlinx.serialization.modules.polymorphic
 import java.nio.file.Path
-import java.sql.DriverManager
 import java.sql.Connection
+import java.sql.DriverManager
 
 object SQLitePolicyExporter {
-    // Réutilise la même configuration JSON que PolicyRepository
+    // Reuse the same JSON configuration as PolicyRepository
     private val json = Json {
         classDiscriminator = "type"
         ignoreUnknownKeys = true
@@ -20,10 +17,10 @@ object SQLitePolicyExporter {
     }
 
     fun exportAll(root: Path, outputDb: Path) {
-        // Charge le driver SQLite
+        // Load the SQLite driver
         Class.forName("org.sqlite.JDBC")
 
-        // Création / ouverture de la base
+        // Creation / opening of the database
         val url = "jdbc:sqlite:${outputDb.toAbsolutePath()}"
         DriverManager.getConnection(url).use { conn ->
             conn.autoCommit = false
@@ -45,7 +42,7 @@ object SQLitePolicyExporter {
             }
 
             conn.commit()
-            println("✅ Exporté ${PolicyRepository.loadAll(root).size} policies dans $outputDb")
+            println("✅ Export ${PolicyRepository.loadAll(root).size} policies in $outputDb")
         }
     }
 
