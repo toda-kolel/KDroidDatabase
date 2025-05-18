@@ -1,0 +1,9 @@
+{
+  "type": "Fixed",
+  "packageName": "kcm.fm.volume",
+  "category": "MUSIC_AUDIO",
+  "minimumVersionCode": 0,
+  "networkPolicy": {
+    "mode": "FULL_OPEN"
+  }
+}
