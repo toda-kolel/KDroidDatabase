@@ -2,6 +2,17 @@
 
 Welcome to the community-driven database of kosher filtering rules for applications. This guide is primarily used by KDroid Filter but is freely available for anyone to use. Licensed under the LGPL, you may integrate these policies even in closed-source applications. At this stage, it is recommended to contribute only host-based rules, as the tools for detecting apps and UI nodes are not yet available.
 
+The KDroid app store dynamically adapts its application listings based on the current **UserMode** (levels 0 to 5) to only show apps that are appropriate for each level:
+
+* In **OFFLINE** (0) or **LOCAL\_ONLY** (1) modes, only updates for already installed apps that can work offline will be shown.
+* In **GPS\_ONLY** mode (2), only apps in the **NAVIGATION** category will be visible.
+* In **GPS\_AND\_MAIL** mode (3), apps in the **MAIL** category will also be included.
+* In **REDUCED\_RISK** mode (4), only apps from trusted categories will appear: **TORAH**, **PRODUCTIVITY**, **TOOLS**, **FINANCE**, **MUSIC\_AUDIO**, and **HOME**.
+* Finally, in **MOST\_OPEN** mode (5), all available apps will be listed.
+
+For applications using a **ModeBasedPolicy**, if a rule is defined for a lower level (e.g. 1 or 2), any higher levels (3, 4, or 5) without an explicit configuration will automatically inherit that rule.
+
+Here is a simple tree of all available modes :
 ---
 
 ```text
