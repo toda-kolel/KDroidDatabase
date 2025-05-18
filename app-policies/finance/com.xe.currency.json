@@ -1,0 +1,9 @@
+{
+  "type": "Fixed",
+  "packageName": "com.xe.currency",
+  "category": "FINANCE",
+  "minimumVersionCode": 0,
+  "networkPolicy": {
+    "mode": "FULL_OPEN"
+  }
+}
