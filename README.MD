@@ -140,6 +140,21 @@ Use when each user mode has multiple variants, each with its own rules and optio
             }
           ],
           "overrideDefaultRules": false
+        },
+        {
+          "id": "groups_block",
+          "label": "Block groups",
+          "policy": { "mode": "FULL_OPEN" },
+          "detectionRules": [
+            {
+              "type": "NODE",
+              "targets": ["GROUP_IDENTIFIER"],
+              "condition": "ONLY_IF",
+              "action": "KILL_APP"
+            }
+          ],
+          "configurationRequired": true,
+          "configurationKey": "whatsapp_groups_prefs"
         }
       ],
       "defaultVariantId": "open"
@@ -166,6 +181,17 @@ Use when each user mode has multiple variants, each with its own rules and optio
         * `false`: merge root rules + variant rules (set explicitly).
 
 ---
+
+🧩 About configurationRequired and configurationKey
+Some MultiModePolicy variants may require user configuration (for example, specifying allowed or blocked WhatsApp groups). To support this, a variant can define:
+
+configurationRequired: true → Signals the app that this variant needs extra user input (e.g., group names).
+
+configurationKey: "..." → A unique key used to link user input to the policy variant.
+
+The app is expected to query this configuration during enforcement. The backend does not define values—only the key.
+
+
 
 ## ✅ Checklist Before Submitting
 
