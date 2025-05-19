@@ -40,6 +40,8 @@ data class MultiModePolicy(
     override val category: AppCategory,
     val modeVariants: List<ModeVariants>,
     override val minimumVersionCode: Int,
+    override val hasUnmodestImage: Boolean = false,
+    override val isPotentiallyDangerous: Boolean = false,
     override val detectionRules: List<DetectionRule> = emptyList()
 ) : AppPolicy {
 
