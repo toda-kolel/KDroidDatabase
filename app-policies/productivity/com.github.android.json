@@ -1,0 +1,9 @@
+{
+  "type": "Fixed",
+  "packageName": "com.github.android",
+  "category": "PRODUCTIVITY",
+  "networkPolicy": {
+    "mode": "FULL_OPEN"
+  },
+  "minimumVersionCode": 0
+}
