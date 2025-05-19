@@ -1,0 +1,18 @@
+{
+  "type": "Fixed",
+  "packageName": "fm.jewishmusic.application",
+  "category": "MUSIC",
+  "networkPolicy": {
+    "mode": "WHITELIST",
+    "spec": {
+      "type": "HostList",
+      "hosts": [
+        "j-m.app",
+        "*.j-m.app",
+        "cdn.j-m.app",
+        "media.j-m.app"
+      ]
+    }
+  },
+  "minimumVersionCode": 0
+}
