@@ -9,6 +9,8 @@ sealed interface AppPolicy {
     val packageName: String
     val category: AppCategory
     val minimumVersionCode: Int
+
+    val hasUnmodestImage : Boolean
     val detectionRules: List<DetectionRule>
 }
 
