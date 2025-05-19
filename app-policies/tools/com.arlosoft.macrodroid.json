@@ -1,0 +1,9 @@
+{
+  "type": "Fixed",
+  "packageName": "com.arlosoft.macrodroid",
+  "category": "TOOLS",
+  "networkPolicy": {
+    "mode": "OFFLINE"
+  },
+  "minimumVersionCode": 0
+}
