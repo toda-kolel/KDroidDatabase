@@ -1,0 +1,9 @@
+{
+  "type": "Fixed",
+  "packageName": "com.khl.www2",
+  "category": "TORAH",
+  "networkPolicy": {
+    "mode": "FULL_OPEN"
+  },
+  "minimumVersionCode": 0
+}
