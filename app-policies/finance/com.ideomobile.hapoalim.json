@@ -1,0 +1,17 @@
+{
+  "type": "Fixed",
+  "packageName": "com.ideomobile.hapoalim",
+  "category": "FINANCE",
+  "networkPolicy": {
+    "mode": "BLACKLIST",
+    "spec": {
+      "type": "HostList",
+      "hosts": [
+        "bam.nr-data.net",
+        "*.google-analytics.com",
+        "*.doubleclick.net"
+      ]
+    }
+  },
+  "minimumVersionCode": 0
+}
