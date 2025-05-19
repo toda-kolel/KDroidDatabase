@@ -1,7 +1,7 @@
 {
   "type": "Fixed",
   "packageName": "com.ideomobile.hapoalim",
-  "category": "BANKING",
+  "category": "FINANCE",
   "networkPolicy": {
     "mode": "BLACKLIST",
     "spec": {
