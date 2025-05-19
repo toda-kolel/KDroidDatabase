@@ -235,3 +235,51 @@ Both modes block all outbound Internet traffic; the distinction is mainly about 
 * Pick **`OFFLINE`** for apps that work perfectly without any network so you avoid showing an unnecessary notification.
 
 ---
+
+### ⚠️ Optional Flags: Content and Risk Warnings
+
+You can optionally include the following boolean flags in your policy files to help with sensitive app filtering and user awareness:
+
+* **`hasUnmodestImage`**: Set to `true` if the app contains unfiltered, inappropriate or immodest visual content (e.g. uncovered women in media banners, icons, or previews). This indicates that the user must explicitly accept the risk in order to use the app.
+
+* **`isPotentiallyDangerous`**: Set to `true` if the app can pose a technical or security risk, such as remote access tools or apps capable of controlling other devices over open internet connections. This flag helps apply stricter rules or prompt additional warnings.
+
+These fields are optional but enforced by default: apps with these flags will not appear in the store or be granted internet access unless the user has explicitly accepted the associated risk.
+
+Apps marked with either of these flags will only appear in the store or receive internet access **if the user has explicitly acknowledged the risk** and chosen to enable them manually.
+
+---
+
+### 🔄 Example: Risky Applications
+
+#### 1. Bank App with Inappropriate Visuals
+
+```json
+{
+  "type": "Fixed",
+  "packageName": "com.example.fakebank",
+  "category": "FINANCE",
+  "minimumVersionCode": 100,
+  "hasUnmodestImage": true,
+  "networkPolicy": {
+    "mode": "FULL_OPEN"
+  }
+}
+```
+
+#### 2. Remote Access Tool
+
+```json
+{
+  "type": "Fixed",
+  "packageName": "com.example.remotecontrol",
+  "category": "TOOLS",
+  "minimumVersionCode": 50,
+  "isPotentiallyDangerous": true,
+  "networkPolicy": {
+    "mode": "FULL_OPEN"
+  }
+}
+```
+
+Both of these apps are tagged for additional caution. They will only be functional or visible if the user has agreed to unlock them by accepting the risks.
