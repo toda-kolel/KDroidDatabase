@@ -3,7 +3,7 @@
   "packageName": "com.arlosoft.macrodroid",
   "category": "TOOLS",
   "networkPolicy": {
-    "mode": "FULL_OPEN"
+    "mode": "OFFLINE"
   },
   "minimumVersionCode": 0
 }
