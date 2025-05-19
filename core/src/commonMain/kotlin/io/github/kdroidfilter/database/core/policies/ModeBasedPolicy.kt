@@ -16,5 +16,6 @@ data class ModeBasedPolicy(
     val modePolicies: Map<UserMode, NetworkPolicy>,
     override val minimumVersionCode: Int,
     override val hasUnmodestImage: Boolean = false,
+    override val isPotentiallyDangerous: Boolean = false,
     override val detectionRules: List<DetectionRule> = emptyList()
 ) : AppPolicy

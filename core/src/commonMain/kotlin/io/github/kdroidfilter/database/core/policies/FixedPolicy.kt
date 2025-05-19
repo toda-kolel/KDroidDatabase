@@ -15,5 +15,6 @@ data class FixedPolicy(
     val networkPolicy: NetworkPolicy,
     override val minimumVersionCode: Int,
     override val hasUnmodestImage: Boolean = false,
+    override val isPotentiallyDangerous: Boolean = false,
     override val detectionRules: List<DetectionRule> = emptyList()
 ) : AppPolicy

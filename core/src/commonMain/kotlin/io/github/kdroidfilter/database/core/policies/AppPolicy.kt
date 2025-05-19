@@ -11,6 +11,7 @@ sealed interface AppPolicy {
     val minimumVersionCode: Int
 
     val hasUnmodestImage : Boolean
+    val isPotentiallyDangerous : Boolean
     val detectionRules: List<DetectionRule>
 }
 
