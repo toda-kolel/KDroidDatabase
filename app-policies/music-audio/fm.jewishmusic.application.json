@@ -1,7 +1,7 @@
 {
   "type": "Fixed",
   "packageName": "fm.jewishmusic.application",
-  "category": "MUSIC",
+  "category": "MUSIC_AUDIO",
   "networkPolicy": {
     "mode": "WHITELIST",
     "spec": {
