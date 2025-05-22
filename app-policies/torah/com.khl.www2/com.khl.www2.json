@@ -3,7 +3,11 @@
   "packageName": "com.khl.www2",
   "category": "TORAH",
   "networkPolicy": {
-    "mode": "FULL_OPEN"
+    "mode": "WHITELIST",
+    "spec": {
+      "type": "HostList",
+      "hosts": ["www2.kolhalashon.com"]
+    }
   },
   "minimumVersionCode": 0
 }
